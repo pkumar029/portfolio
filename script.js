@@ -566,6 +566,7 @@ function initTimeline() {
     ];
 
     const timeline = $('#timeline');
+    if (!timeline) return;
     experiences.forEach((exp, i) => {
         const item = document.createElement('div');
         item.className = 'timeline-item reveal';
@@ -611,6 +612,7 @@ function initTestimonials() {
     ];
 
     const slider = $('#testimonialsSlider');
+    if (!slider) return;
     const dotsContainer = $('#sliderDots');
     let current = 0;
 
