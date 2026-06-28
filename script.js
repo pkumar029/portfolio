@@ -484,7 +484,7 @@ function initProjects() {
             categoryLabel: 'Automation',
             desc: 'Python-based WhatsApp automation tool to send scheduled messages, bulk notifications, and auto-replies using WhatsApp Web API.',
             tags: ['Python', 'Selenium', 'WhatsApp API', 'Automation'],
-            badge: 'Automation',
+            badge: 'Coming Soon',
             emoji: '💬',
             gradient: 'linear-gradient(135deg, #22c55e22, #06b6d422)',
         },
@@ -508,7 +508,7 @@ function initProjects() {
                         <a href="#" class="overlay-btn">Live Demo</a>
                         <a href="#" class="overlay-btn ghost">GitHub</a>
                     </div>
-                    <span class="project-badge">${proj.badge}</span>
+                    <span class="project-badge ${proj.badge === 'Coming Soon' ? 'coming-soon-badge' : ''}">${proj.badge}</span>
                 </div>
                 <div class="project-body">
                     <div class="project-category">${proj.categoryLabel}</div>
