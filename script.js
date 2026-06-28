@@ -508,8 +508,12 @@ function initProjects() {
                         <span style="font-size:4rem">${proj.emoji}</span>
                     </div>
                     <div class="project-overlay">
-                        <a href="${proj.liveUrl || '#'}" class="overlay-btn" ${proj.liveUrl ? 'target="_blank" rel="noreferrer noopener"' : ''}>Live Demo</a>
-                        <a href="${proj.githubUrl || '#'}" class="overlay-btn ghost" ${proj.githubUrl ? 'target="_blank" rel="noreferrer noopener"' : ''}>GitHub</a>
+                        ${proj.liveUrl
+                            ? `<a href="${proj.liveUrl}" class="overlay-btn" target="_blank" rel="noreferrer noopener">Live Demo</a>`
+                            : `<span class="overlay-btn disabled">Coming Soon</span>`}
+                        ${proj.githubUrl
+                            ? `<a href="${proj.githubUrl}" class="overlay-btn ghost" target="_blank" rel="noreferrer noopener">GitHub</a>`
+                            : ''}
                     </div>
                     <span class="project-badge ${proj.badge === 'Coming Soon' ? 'coming-soon-badge' : ''}">${proj.badge}</span>
                 </div>
