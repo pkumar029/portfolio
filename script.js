@@ -181,7 +181,7 @@ function initNavbar() {
    ============================================================ */
 function initHero() {
     const dynamicEl = $('#dynamicText');
-    const roles = ['B.Tech IT Student', 'Frontend Developer', 'Python Programmer', 'Spring Boot Enthusiast', 'Responsive Web Creator'];
+    const roles = ['Python Full Stack Developer'];
     let roleIdx = 0, charIdx = 0, isDeleting = false;
 
     function type() {
@@ -323,7 +323,8 @@ function initSkills() {
         { name: 'Spring Boot', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg',      level: 'Intermediate', category: 'backend', pct: 80 },
         { name: 'SQL',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',      level: 'Advanced',    category: 'backend', pct: 88 },
         { name: 'MySQL',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',      level: 'Advanced',    category: 'backend', pct: 87 },
-        { name: 'Oracle',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg',    level: 'Intermediate', category: 'backend', pct: 78 },
+        { name: 'SQLite',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg',    level: 'Advanced',     category: 'backend', pct: 82 },
+        { name: 'AWS',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg', level: 'Intermediate', category: 'tools', pct: 75 },
         { name: 'Git',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',         level: 'Expert',      category: 'tools',   pct: 92 },
         { name: 'GitHub',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',     level: 'Advanced',    category: 'tools',   pct: 90 },
         { name: 'Visual Studio',icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg', level: 'Advanced', category: 'tools', pct: 84 },
@@ -359,25 +360,35 @@ function initSkills() {
     });
     renderSkills('all');
 
-    // Progress bars data
     const progressData = [
-        { name: 'Frontend Development',   pct: 92 },
-        { name: 'Backend Development',    pct: 86 },
-        { name: 'Database Management',    pct: 84 },
-        { name: 'Responsive Web Design',  pct: 90 },
-        { name: 'Version Control',        pct: 90 },
+        { name: 'Python Development',     pct: 94, icon: '🐍', gradient: 'linear-gradient(90deg,#7c3aed,#a855f7,#c084fc)', glow: 'rgba(168,85,247,0.7)' },
+        { name: 'Web Development',        pct: 88, icon: '🌐', gradient: 'linear-gradient(90deg,#0ea5e9,#06b6d4,#67e8f9)', glow: 'rgba(6,182,212,0.7)'  },
+        { name: 'REST API & Backend',     pct: 86, icon: '⚡', gradient: 'linear-gradient(90deg,#f59e0b,#fbbf24,#fde68a)', glow: 'rgba(251,191,36,0.7)'  },
+        { name: 'Database (SQL/MySQL)',   pct: 85, icon: '🗄️', gradient: 'linear-gradient(90deg,#10b981,#34d399,#6ee7b7)', glow: 'rgba(52,211,153,0.7)'  },
+        { name: 'Git & Version Control',  pct: 90, icon: '🔧', gradient: 'linear-gradient(90deg,#ef4444,#f97316,#fb923c)', glow: 'rgba(249,115,22,0.7)'  },
     ];
+
+    const TOTAL_DOTS = 10;
+
     const pbContainer = $('#progressBars');
-    progressData.forEach(p => {
+    pbContainer.className = 'skill-dots-list';
+    progressData.forEach((p, rowIdx) => {
+        const filled = Math.round(p.pct / TOTAL_DOTS);
+        const dots = Array.from({ length: TOTAL_DOTS }, (_, i) => {
+            const isFilled = i < filled;
+            return `<span class="skill-dot ${isFilled ? 'filled' : 'empty'}"
+                         style="${isFilled ? `background:${p.gradient};box-shadow:0 0 8px ${p.glow}` : ''}"
+                         data-delay="${rowIdx * 80 + i * 60}"></span>`;
+        }).join('');
+
         pbContainer.innerHTML += `
-            <div class="progress-item">
-                <div class="progress-info">
-                    <span class="progress-name">${p.name}</span>
-                    <span class="progress-pct">${p.pct}%</span>
+            <div class="skill-dot-row">
+                <div class="sdk-left">
+                    <span class="sdk-icon">${p.icon}</span>
+                    <span class="sdk-name">${p.name}</span>
                 </div>
-                <div class="progress-track">
-                    <div class="progress-fill" data-pct="${p.pct}"></div>
-                </div>
+                <div class="sdk-dots">${dots}</div>
+                <span class="sdk-pct" style="color:${p.glow}">${p.pct}%</span>
             </div>
         `;
     });
@@ -389,34 +400,20 @@ function initSkills() {
 function initProgressBars() {
     let animated = false;
 
-    function animateFills() {
+    function animateDots() {
         if (animated) return;
         animated = true;
 
-        const fills = $$('.progress-fill');
-        fills.forEach(fill => {
-            const target = +fill.dataset.pct || 0;
-            const pctEl = fill.closest('.progress-item')?.querySelector('.progress-pct');
-
-            fill.style.width = '0%';
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    fill.style.width = target + '%';
-                });
-            });
-
-            if (pctEl) {
-                pctEl.textContent = '0%';
-                const duration = 1400;
-                let start = null;
-                function step(timestamp) {
-                    if (!start) start = timestamp;
-                    const progress = Math.min((timestamp - start) / duration, 1);
-                    pctEl.textContent = Math.round(progress * target) + '%';
-                    if (progress < 1) requestAnimationFrame(step);
-                }
-                requestAnimationFrame(step);
-            }
+        const dots = $$('.skill-dot.filled');
+        dots.forEach(dot => {
+            const delay = +dot.dataset.delay || 0;
+            dot.style.opacity = '0';
+            dot.style.transform = 'scale(0)';
+            setTimeout(() => {
+                dot.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                dot.style.opacity = '1';
+                dot.style.transform = 'scale(1)';
+            }, delay);
         });
     }
 
@@ -426,13 +423,13 @@ function initProgressBars() {
     if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
-                animateFills();
+                animateDots();
                 observer.disconnect();
             }
         }, { threshold: 0 });
         observer.observe(container);
     } else {
-        animateFills();
+        animateDots();
     }
 }
 
@@ -482,24 +479,14 @@ function initProjects() {
             gradient: 'linear-gradient(135deg, #22c55e22, #06b6d422)',
         },
         {
-            title: 'Social Media Design',
-            category: 'design',
-            categoryLabel: 'UI/UX',
-            desc: 'Complete UI/UX design system for a social media app with 50+ custom components.',
-            tags: ['Figma', 'Design System', 'Prototyping', 'Accessibility'],
-            badge: 'Design',
-            emoji: '🎨',
-            gradient: 'linear-gradient(135deg, #e879f922, #f59e0b22)',
-        },
-        {
-            title: 'Task Management SaaS',
+            title: 'WhatsApp Automation',
             category: 'web',
-            categoryLabel: 'SaaS',
-            desc: 'Collaborative project management tool with real-time updates, kanban boards, and team features.',
-            tags: ['Next.js', 'Prisma', 'PostgreSQL', 'Zustand'],
-            badge: 'SaaS',
-            emoji: '✅',
-            gradient: 'linear-gradient(135deg, #7c3aed22, #22c55e22)',
+            categoryLabel: 'Automation',
+            desc: 'Python-based WhatsApp automation tool to send scheduled messages, bulk notifications, and auto-replies using WhatsApp Web API.',
+            tags: ['Python', 'Selenium', 'WhatsApp API', 'Automation'],
+            badge: 'Automation',
+            emoji: '💬',
+            gradient: 'linear-gradient(135deg, #22c55e22, #06b6d422)',
         },
     ];
 
@@ -666,10 +653,21 @@ function initTestimonials() {
 /* ============================================================
    13. CONTACT FORM
    ============================================================ */
+emailjs.init('BVaEGbd5UiLDFCb2j');
+
 function initContact() {
     const form    = $('#contactForm');
     const btn     = $('#submitBtn');
     const success = $('#formSuccess');
+
+    const btnHTML = `
+        <span class="btn-text">Send Message</span>
+        <span class="btn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18">
+                <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/>
+            </svg>
+        </span>
+    `;
 
     form.addEventListener('submit', e => {
         e.preventDefault();
@@ -682,15 +680,14 @@ function initContact() {
         btn.textContent = 'Sending…';
         btn.disabled = true;
 
-        setTimeout(() => {
-            btn.innerHTML = `
-                <span class="btn-text">Send Message</span>
-                <span class="btn-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18">
-                        <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/>
-                    </svg>
-                </span>
-            `;
+        emailjs.send('service_adgpz4f', 'template_3cno3al', {
+            from_name:  name,
+            from_email: email,
+            subject:    subject,
+            message:    message,
+        })
+        .then(() => {
+            btn.innerHTML = btnHTML;
             btn.disabled = false;
             form.reset();
             success.innerHTML = `
@@ -707,7 +704,15 @@ function initContact() {
             `;
             success.classList.add('show');
             setTimeout(() => success.classList.remove('show'), 8000);
-        }, 2000);
+        })
+        .catch(err => {
+            console.error('EmailJS error:', err);
+            btn.innerHTML = btnHTML;
+            btn.disabled = false;
+            success.innerHTML = `<div class="submission-summary"><p class="summary-title">❌ Failed to send. Please try again.</p></div>`;
+            success.classList.add('show');
+            setTimeout(() => success.classList.remove('show'), 5000);
+        });
     });
 }
 
