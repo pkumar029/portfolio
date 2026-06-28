@@ -461,11 +461,11 @@ function initProjects() {
         {
             title: 'Portfolio Dashboard',
             category: 'web',
-            categoryLabel: 'Dashboard',
-            desc: 'Beautiful analytics dashboard with data visualization, charts, and real-time updates.',
-            tags: ['Vue.js', 'D3.js', 'PostgreSQL', 'REST API'],
-            badge: 'Open Source',
-            emoji: '📊',
+            categoryLabel: 'Web App',
+            desc: 'Personal portfolio website built from scratch with smooth animations, particle effects, dark theme, and a fully functional contact form.',
+            tags: ['HTML5', 'CSS3', 'JavaScript', 'EmailJS'],
+            badge: 'Live',
+            emoji: '🚀',
             gradient: 'linear-gradient(135deg, #f59e0b22, #7c3aed22)',
         },
         {
