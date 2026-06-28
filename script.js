@@ -467,6 +467,8 @@ function initProjects() {
             badge: 'Live',
             emoji: '🚀',
             gradient: 'linear-gradient(135deg, #f59e0b22, #7c3aed22)',
+            liveUrl: 'https://praveen.tamix.in/',
+            githubUrl: 'https://github.com/pkumar029/portfolio',
         },
         {
             title: 'Fitness Tracker App',
@@ -505,8 +507,8 @@ function initProjects() {
                         <span style="font-size:4rem">${proj.emoji}</span>
                     </div>
                     <div class="project-overlay">
-                        <a href="#" class="overlay-btn">Live Demo</a>
-                        <a href="#" class="overlay-btn ghost">GitHub</a>
+                        <a href="${proj.liveUrl || '#'}" class="overlay-btn" ${proj.liveUrl ? 'target="_blank" rel="noreferrer noopener"' : ''}>Live Demo</a>
+                        <a href="${proj.githubUrl || '#'}" class="overlay-btn ghost" ${proj.githubUrl ? 'target="_blank" rel="noreferrer noopener"' : ''}>GitHub</a>
                     </div>
                     <span class="project-badge ${proj.badge === 'Coming Soon' ? 'coming-soon-badge' : ''}">${proj.badge}</span>
                 </div>
