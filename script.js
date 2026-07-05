@@ -487,9 +487,11 @@ function initProjects() {
             categoryLabel: 'Automation',
             desc: 'Python-based WhatsApp automation tool to send scheduled messages, bulk notifications, and auto-replies using WhatsApp Web API.',
             tags: ['Python', 'Selenium', 'WhatsApp API', 'Automation'],
-            badge: 'Coming Soon',
+            badge: 'live',
             emoji: '💬',
             gradient: 'linear-gradient(135deg, #22c55e22, #06b6d422)',
+            liveUrl: 'https://wa.tamix.in/',
+            githubUrl: 'https://github.com/pkumar029/-whatsapp-_automate-',
         },
     ];
 
