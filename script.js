@@ -444,9 +444,10 @@ function initProjects() {
             categoryLabel: 'Web App',
             desc: 'Full-featured online store with real-time inventory, payment integration, and admin dashboard.',
             tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-            badge: 'Featured',
+            badge: 'live',
             emoji: '🛒',
             gradient: 'linear-gradient(135deg, #7c3aed22, #06b6d422)',
+            liveUrl: 'https://e-commerce-w465.vercel.app',
         },
         {
             title: 'Student Enquiry Chatbot',
