@@ -13,6 +13,98 @@ window.addEventListener('unhandledrejection', e => console.error('Unhandled prom
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
+/* ── Shared portfolio data (single source of truth for sections + chatbot) ── */
+const PROFILE = {
+    name: 'Praveen Kumar D',
+    role: 'Python Full Stack Developer',
+    location: 'Bangalore, India',
+    email: 'pkumard398@gmail.com',
+    phone: '+91 90259 45924',
+    github: 'https://github.com/pkumar029',
+    linkedin: 'https://www.linkedin.com/in/praveen-kumar-d-537ab42a3',
+    resume: 'assets/praveen%20Resume_Updated.pdf',
+};
+
+const SKILLS = [
+    { name: 'HTML5',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',      level: 'Expert',      category: 'frontend', pct: 96 },
+    { name: 'CSS3',        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',        level: 'Expert',      category: 'frontend', pct: 94 },
+    { name: 'Bootstrap',   icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg', level: 'Advanced', category: 'frontend', pct: 88 },
+    { name: 'Tailwind CSS',icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg', level: 'Advanced', category: 'frontend', pct: 86 },
+    { name: 'Python',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',      level: 'Expert',      category: 'backend', pct: 92 },
+    { name: 'Spring Boot', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg',      level: 'Intermediate', category: 'backend', pct: 80 },
+    { name: 'SQL',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',      level: 'Advanced',    category: 'backend', pct: 88 },
+    { name: 'MySQL',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',      level: 'Advanced',    category: 'backend', pct: 87 },
+    { name: 'SQLite',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg',    level: 'Advanced',     category: 'backend', pct: 82 },
+    { name: 'AWS',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg', level: 'Intermediate', category: 'tools', pct: 75 },
+    { name: 'Git',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',         level: 'Expert',      category: 'tools',   pct: 92 },
+    { name: 'GitHub',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',     level: 'Advanced',    category: 'tools',   pct: 90 },
+    { name: 'Visual Studio',icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg', level: 'Advanced', category: 'tools', pct: 84 },
+    { name: 'Linux',        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg', level: 'Intermediate', category: 'tools', pct: 78 },
+];
+
+const PROJECTS = [
+    {
+        title: 'E-Commerce Platform',
+        category: 'web',
+        categoryLabel: 'Web App',
+        desc: 'Full-featured online store with real-time inventory, payment integration, and admin dashboard.',
+        tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+        badge: 'Featured',
+        emoji: '🛒',
+        gradient: 'linear-gradient(135deg, #10b98122, #f59e0b22)',
+        img: 'assets/projects/ecommerce.jpg',
+    },
+    {
+        title: 'Student Enquiry Chatbot',
+        category: 'web',
+        categoryLabel: 'AI/Web App',
+        desc: 'AI-powered student enquiry chatbot that answers academic queries, admission details, and college information in real time.',
+        tags: ['AI', 'Chatbot', 'React', 'Lovable'],
+        badge: 'AI',
+        emoji: '🎓',
+        gradient: 'linear-gradient(135deg, #f59e0b22, #10b98122)',
+        liveUrl: 'https://student-chatbox.lovable.app/login',
+        img: 'assets/projects/chatbot.jpg',
+    },
+    {
+        title: 'Portfolio Dashboard',
+        category: 'web',
+        categoryLabel: 'Web App',
+        desc: 'Personal portfolio website built from scratch with smooth animations, particle effects, dark theme, and a fully functional contact form.',
+        tags: ['HTML5', 'CSS3', 'JavaScript', 'EmailJS'],
+        badge: 'Live',
+        emoji: '🚀',
+        gradient: 'linear-gradient(135deg, #f43f5e22, #10b98122)',
+        liveUrl: 'https://praveen.tamix.in/',
+        githubUrl: 'https://github.com/pkumar029/portfolio',
+        img: 'assets/projects/portfolio.jpg',
+    },
+    {
+        title: 'Fitness Tracker App',
+        category: 'mobile',
+        categoryLabel: 'Mobile App',
+        desc: 'Cross-platform fitness app with workout tracking, nutrition logging, and progress analytics.',
+        tags: ['React Native', 'Firebase', 'Redux', 'TypeScript'],
+        badge: 'Mobile',
+        emoji: '💪',
+        gradient: 'linear-gradient(135deg, #22c55e22, #f59e0b22)',
+        img: 'assets/projects/fitness.jpg',
+    },
+    {
+        title: 'WhatsApp Automation',
+        category: 'web',
+        categoryLabel: 'Automation',
+        desc: 'Python-based WhatsApp automation tool to send scheduled messages, bulk notifications, and auto-replies using WhatsApp Web API.',
+        tags: ['Python', 'Selenium', 'WhatsApp API', 'Automation'],
+        badge: 'live',
+        emoji: '💬',
+        gradient: 'linear-gradient(135deg, #22c55e22, #f59e0b22)',
+        liveUrl: 'https://wa.tamix.in/',
+        githubUrl: 'https://github.com/pkumar029/-whatsapp-_automate-',
+        img: 'assets/projects/whatsapp.jpg',
+    },
+];
+
 /* ============================================================
    1. LOADING SCREEN
    ============================================================ */
@@ -38,7 +130,7 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
             position:absolute;
             width:${Math.random()*4+1}px;
             height:${Math.random()*4+1}px;
-            background:rgba(124,58,237,${Math.random()*0.5+0.1});
+            background:rgba(16,185,129,${Math.random()*0.5+0.1});
             border-radius:50%;
             left:${Math.random()*100}%;
             top:${Math.random()*100}%;
@@ -84,12 +176,14 @@ function startApp() {
     initParticleCanvas();
     initSkills();
     initProjects();
+    initBlog();
     initGithub();
     initTimeline();
     initTestimonials();
     initContact();
     initScrollReveal();
     initBackToTop();
+    initChatbot();
     initCounters();
     initProgressBars();
 }
@@ -119,17 +213,19 @@ function initCursor() {
     }
     animFollower();
 
-    // Hover effect
-    const hoverEls = $$('a, button, .skill-card, .project-card, .contact-card, .social-link');
-    hoverEls.forEach(el => {
-        el.addEventListener('mouseenter', () => {
+    // Hover effect — delegated so it also works on cards rendered after this runs
+    const HOVER_SELECTOR = 'a, button, .skill-card, .project-card, .blog-card, .contact-card, .social-link';
+    document.addEventListener('mouseover', e => {
+        if (e.target.closest(HOVER_SELECTOR)) {
             cursor.classList.add('hover');
             follower.classList.add('hover');
-        });
-        el.addEventListener('mouseleave', () => {
+        }
+    });
+    document.addEventListener('mouseout', e => {
+        if (e.target.closest(HOVER_SELECTOR)) {
             cursor.classList.remove('hover');
             follower.classList.remove('hover');
-        });
+        }
     });
 }
 
@@ -236,7 +332,7 @@ function initParticleCanvas() {
             this.vy = (Math.random() - 0.5) * 0.4;
             this.r  = Math.random() * 2 + 0.5;
             this.alpha = Math.random() * 0.5 + 0.1;
-            const hue = Math.random() > 0.5 ? 270 : 190;
+            const hue = Math.random() > 0.5 ? 160 : 38;
             this.color = `hsla(${hue}, 80%, 70%, ${this.alpha})`;
         }
         update() {
@@ -264,7 +360,7 @@ function initParticleCanvas() {
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(124,58,237,${(1 - dist / LINK_DIST) * 0.15})`;
+                    ctx.strokeStyle = `rgba(16,185,129,${(1 - dist / LINK_DIST) * 0.15})`;
                     ctx.lineWidth = 1;
                     ctx.stroke();
                 }
@@ -315,28 +411,11 @@ function initCounters() {
    8. SKILLS
    ============================================================ */
 function initSkills() {
-    const skills = [
-        { name: 'HTML5',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',      level: 'Expert',      category: 'frontend', pct: 96 },
-        { name: 'CSS3',        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',        level: 'Expert',      category: 'frontend', pct: 94 },
-        { name: 'Bootstrap',   icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg', level: 'Advanced', category: 'frontend', pct: 88 },
-        { name: 'Tailwind CSS',icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg', level: 'Advanced', category: 'frontend', pct: 86 },
-        { name: 'Python',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',      level: 'Expert',      category: 'backend', pct: 92 },
-        { name: 'Spring Boot', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg',      level: 'Intermediate', category: 'backend', pct: 80 },
-        { name: 'SQL',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',      level: 'Advanced',    category: 'backend', pct: 88 },
-        { name: 'MySQL',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',      level: 'Advanced',    category: 'backend', pct: 87 },
-        { name: 'SQLite',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg',    level: 'Advanced',     category: 'backend', pct: 82 },
-        { name: 'AWS',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg', level: 'Intermediate', category: 'tools', pct: 75 },
-        { name: 'Git',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',         level: 'Expert',      category: 'tools',   pct: 92 },
-        { name: 'GitHub',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',     level: 'Advanced',    category: 'tools',   pct: 90 },
-        { name: 'Visual Studio',icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg', level: 'Advanced', category: 'tools', pct: 84 },
-        { name: 'Linux',        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg', level: 'Intermediate', category: 'tools', pct: 78 },
-    ];
-
     const grid = $('#skillsGrid');
     const tabBtns = $$('.tab-btn');
 
     function renderSkills(filter) {
-        const filtered = filter === 'all' ? skills : skills.filter(s => s.category === filter);
+        const filtered = filter === 'all' ? SKILLS : SKILLS.filter(s => s.category === filter);
         grid.innerHTML = '';
         filtered.forEach((sk, i) => {
             const card = document.createElement('div');
@@ -362,11 +441,11 @@ function initSkills() {
     renderSkills('all');
 
     const progressData = [
-        { name: 'Python Development',     pct: 94, icon: '🐍', gradient: 'linear-gradient(90deg,#7c3aed,#a855f7,#c084fc)', glow: 'rgba(168,85,247,0.7)' },
-        { name: 'Web Development',        pct: 88, icon: '🌐', gradient: 'linear-gradient(90deg,#0ea5e9,#06b6d4,#67e8f9)', glow: 'rgba(6,182,212,0.7)'  },
+        { name: 'Python Development',     pct: 94, icon: '🐍', gradient: 'linear-gradient(90deg,#047857,#10b981,#6ee7b7)', glow: 'rgba(16,185,129,0.7)' },
+        { name: 'Web Development',        pct: 88, icon: '🌐', gradient: 'linear-gradient(90deg,#6d28d9,#8b5cf6,#c4b5fd)', glow: 'rgba(139,92,246,0.7)'  },
         { name: 'REST API & Backend',     pct: 86, icon: '⚡', gradient: 'linear-gradient(90deg,#f59e0b,#fbbf24,#fde68a)', glow: 'rgba(251,191,36,0.7)'  },
-        { name: 'Database (SQL/MySQL)',   pct: 85, icon: '🗄️', gradient: 'linear-gradient(90deg,#10b981,#34d399,#6ee7b7)', glow: 'rgba(52,211,153,0.7)'  },
-        { name: 'Git & Version Control',  pct: 90, icon: '🔧', gradient: 'linear-gradient(90deg,#ef4444,#f97316,#fb923c)', glow: 'rgba(249,115,22,0.7)'  },
+        { name: 'Database (SQL/MySQL)',   pct: 85, icon: '🗄️', gradient: 'linear-gradient(90deg,#0d9488,#14b8a6,#5eead4)', glow: 'rgba(20,184,166,0.7)'  },
+        { name: 'Git & Version Control',  pct: 90, icon: '🔧', gradient: 'linear-gradient(90deg,#f43f5e,#fb7185,#fda4af)', glow: 'rgba(244,63,94,0.7)'  },
     ];
 
     const TOTAL_DOTS = 10;
@@ -438,74 +517,11 @@ function initProgressBars() {
    10. PROJECTS
    ============================================================ */
 function initProjects() {
-    const projects = [
-        {
-            title: 'E-Commerce Platform',
-            category: 'web',
-            categoryLabel: 'Web App',
-            desc: 'Full-featured online store with real-time inventory, payment integration, and admin dashboard.',
-            tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-            badge: 'Featured',
-            emoji: '🛒',
-            gradient: 'linear-gradient(135deg, #7c3aed22, #06b6d422)',
-            img: 'assets/projects/ecommerce.jpg',
-        },
-        {
-            title: 'Student Enquiry Chatbot',
-            category: 'web',
-            categoryLabel: 'AI/Web App',
-            desc: 'AI-powered student enquiry chatbot that answers academic queries, admission details, and college information in real time.',
-            tags: ['AI', 'Chatbot', 'React', 'Lovable'],
-            badge: 'AI',
-            emoji: '🎓',
-            gradient: 'linear-gradient(135deg, #06b6d422, #7c3aed22)',
-            liveUrl: 'https://student-chatbox.lovable.app/login',
-            img: 'assets/projects/chatbot.jpg',
-        },
-        {
-            title: 'Portfolio Dashboard',
-            category: 'web',
-            categoryLabel: 'Web App',
-            desc: 'Personal portfolio website built from scratch with smooth animations, particle effects, dark theme, and a fully functional contact form.',
-            tags: ['HTML5', 'CSS3', 'JavaScript', 'EmailJS'],
-            badge: 'Live',
-            emoji: '🚀',
-            gradient: 'linear-gradient(135deg, #f59e0b22, #7c3aed22)',
-            liveUrl: 'https://praveen.tamix.in/',
-            githubUrl: 'https://github.com/pkumar029/portfolio',
-            img: 'assets/projects/portfolio.jpg',
-        },
-        {
-            title: 'Fitness Tracker App',
-            category: 'mobile',
-            categoryLabel: 'Mobile App',
-            desc: 'Cross-platform fitness app with workout tracking, nutrition logging, and progress analytics.',
-            tags: ['React Native', 'Firebase', 'Redux', 'TypeScript'],
-            badge: 'Mobile',
-            emoji: '💪',
-            gradient: 'linear-gradient(135deg, #22c55e22, #06b6d422)',
-            img: 'assets/projects/fitness.jpg',
-        },
-        {
-            title: 'WhatsApp Automation',
-            category: 'web',
-            categoryLabel: 'Automation',
-            desc: 'Python-based WhatsApp automation tool to send scheduled messages, bulk notifications, and auto-replies using WhatsApp Web API.',
-            tags: ['Python', 'Selenium', 'WhatsApp API', 'Automation'],
-            badge: 'live',
-            emoji: '💬',
-            gradient: 'linear-gradient(135deg, #22c55e22, #06b6d422)',
-            liveUrl: 'https://wa.tamix.in/',
-            githubUrl: 'https://github.com/pkumar029/-whatsapp-_automate-',
-            img: 'assets/projects/whatsapp.jpg',
-        },
-    ];
-
     const grid = $('#projectsGrid');
     const filterBtns = $$('.filter-btn');
 
     function renderProjects(filter) {
-        const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+        const filtered = filter === 'all' ? PROJECTS : PROJECTS.filter(p => p.category === filter);
         grid.innerHTML = '';
         filtered.forEach((proj, i) => {
             const card = document.createElement('div');
@@ -549,6 +565,113 @@ function initProjects() {
         });
     });
     renderProjects('all');
+}
+
+/* ============================================================
+   10a. BLOG
+   ============================================================ */
+function initBlog() {
+    const grid = $('#blogGrid');
+    if (!grid) return;
+
+    const posts = [
+        {
+            tag: 'AI / Chatbots',
+            date: 'Mar 2026',
+            readTime: '5 min read',
+            title: 'Building a Real-Time Student Enquiry Chatbot',
+            excerpt: 'How I designed a chatbot that answers admissions and course questions instantly, and what I learned wiring an AI flow into a real login-gated product.',
+            content: `
+                <p>Students at most colleges still hunt through PDFs, notice boards, and half-updated FAQ pages to answer questions that should take five seconds: "When do admissions close?", "What are the fees for this course?", "Is there a hostel on campus?" That gap is what pushed me to build a student enquiry chatbot instead of another static info page.</p>
+                <p>The frontend is React, and I used Lovable to iterate on the conversational flow quickly — sketching intents, testing responses, and reshaping the UI without rebuilding the whole app for every tweak. That speed mattered more than I expected: the first version of the bot answered questions correctly but felt robotic, and most of the real work was in rewriting responses to sound like a helpful senior student rather than a form.</p>
+                <p>I gated the chatbot behind a login screen deliberately. It lets me tie conversations to a real user session instead of anonymous traffic, which matters if this ever needs to hand off unanswered questions to an actual admissions team member.</p>
+                <p>The hardest part wasn't the AI — it was scoping what the bot should <em>not</em> try to answer. Early versions attempted to guess at things like exact seat availability, which changes daily and isn't safe to hallucinate. I ended up building a short "escalate to a human" fallback path for anything outside a fixed set of verified topics.</p>
+                <p>Next on the list: logging which questions the bot fails to answer well, so that list becomes the actual roadmap for what to train next — instead of me guessing what students want to know.</p>
+            `,
+        },
+        {
+            tag: 'Python / Automation',
+            date: 'Jan 2026',
+            readTime: '6 min read',
+            title: 'Automating WhatsApp Messaging with Python & Selenium',
+            excerpt: 'Notes from building a scheduled-messaging tool on top of WhatsApp Web — session persistence, flaky selectors, and staying on the right side of rate limits.',
+            content: `
+                <p>A lot of small businesses I know were sending the same WhatsApp updates by hand every day — order confirmations, reminders, broadcast messages — one contact at a time. That repetition is exactly the kind of problem Python and Selenium are good at solving.</p>
+                <p>The tool drives WhatsApp Web through a real browser session rather than an unofficial private API, because WhatsApp Web is the interface actually meant for humans to click through, and it keeps the automation closer to "a person using a browser" than "a bot hitting undocumented endpoints." I persist the browser profile so the QR-code login only has to happen once, not on every run.</p>
+                <p>The genuinely hard part was reliability. Selenium selectors on WhatsApp Web change often enough that a script working perfectly one week can silently break the next, so I leaned heavily on explicit waits and defensive checks rather than fixed sleep timers. I also built in deliberate delays between sends — not just to look more human, but because hammering any messaging platform with instant, back-to-back sends is how you get a number flagged or banned. Respecting rate limits isn't optional here; it's the whole point of doing this responsibly.</p>
+                <p>What shipped is a small scheduling layer on top: queue a message, a target list, and a send time, and the browser session handles the rest unattended. It's live at a small internal URL rather than public, since this kind of tool is meant for a business messaging its own opted-in contacts, not for bulk unsolicited outreach.</p>
+            `,
+        },
+        {
+            tag: 'Frontend / Web Dev',
+            date: 'Sep 2026',
+            readTime: '4 min read',
+            title: 'Designing and Rebuilding This Portfolio From Scratch',
+            excerpt: 'Why this site is vanilla HTML, CSS, and JavaScript with no framework — and what changed when I redesigned the whole visual system in one pass.',
+            content: `
+                <p>This portfolio has no framework under it — no React, no build step, just HTML, CSS, and JavaScript. That was a deliberate choice: every animation on this page, from the particle canvas in the hero to the scroll-reveal on each section, is something I wrote and can fully explain, instead of a component library's default behavior.</p>
+                <p>The hardest part of a from-scratch site isn't the flashy pieces, it's the plumbing: an <code>IntersectionObserver</code> that reveals sections as you scroll, a <code>MutationObserver</code> that re-hooks that same reveal logic onto cards rendered dynamically after the page loads, and a contact form wired to EmailJS so messages actually reach my inbox without me needing to stand up a backend.</p>
+                <p>This redesign in particular replaced the entire color system in one pass — new palette, new type scale, new card language — and that exercise surfaced a real bug: the custom cursor's hover effect was bound only to elements that existed at load time, so cards rendered later (skills, projects, this very blog section) never actually triggered it. Fixing that meant switching to event delegation instead of attaching listeners element-by-element.</p>
+                <p>The GitHub activity section pulls live data from the GitHub REST API on every page load rather than showing a hardcoded list, so it stays accurate without me touching the code. That's the theme across this whole rebuild: fewer static claims, more things that are actually true because the page checked.</p>
+            `,
+        },
+    ];
+
+    grid.innerHTML = posts.map((post, i) => `
+        <button class="blog-card reveal" data-post="${i}" type="button">
+            <div class="blog-meta">
+                <span class="blog-tag">${post.tag}</span>
+                <span>·</span>
+                <span>${post.date}</span>
+                <span>·</span>
+                <span>${post.readTime}</span>
+            </div>
+            <h3 class="blog-title">${post.title}</h3>
+            <p class="blog-excerpt">${post.excerpt}</p>
+            <span class="blog-readmore">
+                Read article
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+        </button>
+    `).join('');
+
+    const modal     = $('#blogModal');
+    const modalBody = $('#blogModalBody');
+    const closeBtn  = $('#blogModalClose');
+    const overlay   = $('#blogModalOverlay');
+
+    function openPost(idx) {
+        const post = posts[idx];
+        if (!post) return;
+        modalBody.innerHTML = `
+            <div class="blog-meta">
+                <span class="blog-tag">${post.tag}</span>
+                <span>·</span>
+                <span>${post.date}</span>
+                <span>·</span>
+                <span>${post.readTime}</span>
+            </div>
+            <h3>${post.title}</h3>
+            ${post.content}
+        `;
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePost() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    grid.addEventListener('click', e => {
+        const card = e.target.closest('.blog-card');
+        if (card) openPost(+card.dataset.post);
+    });
+    closeBtn.addEventListener('click', closePost);
+    overlay.addEventListener('click', closePost);
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closePost();
+    });
 }
 
 /* ============================================================
@@ -847,6 +970,168 @@ function initBackToTop() {
     });
     btn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+/* ============================================================
+   15b. AI ASSISTANT CHATBOT (local keyword search over real
+   portfolio data — no external API, so nothing can be faked
+   or go down)
+   ============================================================ */
+function initChatbot() {
+    const root = $('#chatbot');
+    if (!root) return;
+    const toggle = $('#chatbotToggle');
+    const panel = $('#chatbotPanel');
+    const closeBtn = $('#chatbotClose');
+    const messagesEl = $('#chatbotMessages');
+    const suggestionsEl = $('#chatbotSuggestions');
+    const form = $('#chatbotForm');
+    const input = $('#chatbotInput');
+
+    const SUGGESTIONS = ['Skills', 'Projects', 'Resume', 'Contact'];
+
+    const KB = [
+        {
+            keywords: ['skill', 'tech', 'stack', 'technolog', 'language', 'know', 'tool', 'framework'],
+            answer: () => `I work mainly with <strong>${SKILLS.map(s => s.name).join(', ')}</strong>. Python and web development are the strongest areas — see exact proficiency in the <a href="#skills">Skills section</a>.`,
+        },
+        {
+            keywords: ['project', 'built', 'build', 'app', 'portfolio', 'made', 'work on'],
+            answer: () => `A few things I've built: ${PROJECTS.map(p => `<strong>${p.title}</strong>${p.liveUrl ? ` (<a href="${p.liveUrl}" target="_blank" rel="noreferrer noopener">live</a>)` : ''}`).join(', ')}. Full write-ups are in the <a href="#projects">Projects section</a>.`,
+        },
+        {
+            keywords: ['chatbot', 'student', 'enquiry', 'admission'],
+            answer: () => `The <strong>Student Enquiry Chatbot</strong> is an AI-powered assistant that answers admissions and course questions in real time — built with React and Lovable. <a href="https://student-chatbox.lovable.app/login" target="_blank" rel="noreferrer noopener">Try it live</a> or read the <a href="#blog">blog post</a> about how it was built.`,
+        },
+        {
+            keywords: ['whatsapp', 'automation', 'selenium', 'bulk message'],
+            answer: () => `The <strong>WhatsApp Automation</strong> tool is a Python + Selenium project that drives WhatsApp Web for scheduled messages and auto-replies. <a href="https://wa.tamix.in/" target="_blank" rel="noreferrer noopener">Live demo</a> · <a href="https://github.com/pkumar029/-whatsapp-_automate-" target="_blank" rel="noreferrer noopener">source on GitHub</a>.`,
+        },
+        {
+            keywords: ['resume', 'cv', 'download'],
+            answer: () => `You can download the resume from the <a href="${PROFILE.resume}" download target="_blank" rel="noreferrer noopener">About section</a>.`,
+        },
+        {
+            keywords: ['contact', 'email', 'reach', 'hire', 'phone', 'call', 'number', 'get in touch'],
+            answer: () => `Reach me at <a href="mailto:${PROFILE.email}">${PROFILE.email}</a> or call <a href="tel:${PROFILE.phone.replace(/\s/g, '')}">${PROFILE.phone}</a>. There's also a form in the <a href="#contact">Contact section</a>.`,
+        },
+        {
+            keywords: ['location', 'where', 'based', 'live', 'city', 'country', 'from'],
+            answer: () => `Based in ${PROFILE.location}.`,
+        },
+        {
+            keywords: ['github', 'repo', 'repositor', 'source code'],
+            answer: () => `GitHub: <a href="${PROFILE.github}" target="_blank" rel="noreferrer noopener">${PROFILE.github.replace('https://', '')}</a> — the <a href="#github">GitHub section</a> on this page also pulls in live repos.`,
+        },
+        {
+            keywords: ['linkedin', 'social', 'connect'],
+            answer: () => `Here's the <a href="${PROFILE.linkedin}" target="_blank" rel="noreferrer noopener">LinkedIn profile</a>.`,
+        },
+        {
+            keywords: ['blog', 'article', 'write', 'post', 'writing'],
+            answer: () => `Recent posts in the <a href="#blog">Blog section</a> cover the student chatbot, the WhatsApp automation tool, and rebuilding this portfolio from scratch.`,
+        },
+        {
+            keywords: ['experience', 'background', 'who is', 'about you', 'yourself', 'bio'],
+            answer: () => `I'm ${PROFILE.name}, a ${PROFILE.role} based in ${PROFILE.location}. I build end-to-end web applications — backend logic, databases, and the interface that ties it together. More in the <a href="#about">About section</a>.`,
+        },
+        {
+            keywords: ['hi', 'hello', 'hey', 'yo', 'sup'],
+            answer: () => `Hey! I can answer questions about ${PROFILE.name}'s skills, projects, resume, or how to get in touch. What would you like to know?`,
+        },
+        {
+            keywords: ['thank', 'thanks', 'cool', 'nice', 'great'],
+            answer: () => `You're welcome! Anything else you'd like to know?`,
+        },
+    ];
+
+    const fallback = () =>
+        `I couldn't find a direct answer to that. Try asking about <strong>skills</strong>, <strong>projects</strong>, <strong>resume</strong>, or <strong>contact</strong> — or email <a href="mailto:${PROFILE.email}">${PROFILE.email}</a> directly.`;
+
+    function findAnswer(query) {
+        const q = query.toLowerCase();
+        let best = null, bestScore = 0;
+        KB.forEach(entry => {
+            const score = entry.keywords.reduce((n, kw) => n + (q.includes(kw) ? 1 : 0), 0);
+            if (score > bestScore) { bestScore = score; best = entry; }
+        });
+        return best ? best.answer() : fallback();
+    }
+
+    function addMessage(html, sender) {
+        const el = document.createElement('div');
+        el.className = `chat-msg ${sender}`;
+        el.innerHTML = html;
+        messagesEl.appendChild(el);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function showTyping() {
+        const el = document.createElement('div');
+        el.className = 'chat-typing';
+        el.id = 'chatTypingIndicator';
+        el.innerHTML = '<span></span><span></span><span></span>';
+        messagesEl.appendChild(el);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function hideTyping() {
+        const el = $('#chatTypingIndicator');
+        if (el) el.remove();
+    }
+
+    function respondTo(query) {
+        showTyping();
+        setTimeout(() => {
+            hideTyping();
+            addMessage(findAnswer(query), 'bot');
+        }, 450 + Math.random() * 350);
+    }
+
+    function openChat() {
+        root.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+        panel.setAttribute('aria-hidden', 'false');
+        if (!messagesEl.childElementCount) {
+            addMessage(`Hi, I'm ${PROFILE.name.split(' ')[0]}'s portfolio assistant 👋 Ask me about skills, projects, or how to get in touch.`, 'bot');
+        }
+        setTimeout(() => input.focus(), 200);
+    }
+
+    function closeChat() {
+        root.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        panel.setAttribute('aria-hidden', 'true');
+    }
+
+    toggle.addEventListener('click', () => {
+        root.classList.contains('open') ? closeChat() : openChat();
+    });
+    closeBtn.addEventListener('click', closeChat);
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && root.classList.contains('open')) closeChat();
+    });
+
+    SUGGESTIONS.forEach(label => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'chip';
+        chip.textContent = label;
+        chip.addEventListener('click', () => {
+            addMessage(label, 'user');
+            respondTo(label);
+        });
+        suggestionsEl.appendChild(chip);
+    });
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const val = input.value.trim();
+        if (!val) return;
+        addMessage(val, 'user');
+        input.value = '';
+        respondTo(val);
     });
 }
 

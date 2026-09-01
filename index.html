@@ -11,7 +11,7 @@
     <title>Praveen|Full Stack Developer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -49,6 +49,7 @@
                 <li><a href="#about" class="nav-link" data-section="about">About</a></li>
                 <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
                 <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+                <li><a href="#blog" class="nav-link" data-section="blog">Blog</a></li>
                 <li><a href="#github" class="nav-link" data-section="github">GitHub</a></li>
                 <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
             </ul>
@@ -190,7 +191,7 @@
                         </div>
                     </div>
                     <div class="about-cta">
-                        <a href="assets/Praveen_Kumar_D_Resume.pdf" class="btn-primary" id="downloadCV" download="Praveen_Kumar_D_Resume.pdf" target="_blank" rel="noopener noreferrer">
+                        <a href="assets/praveen%20Resume_Updated.pdf" class="btn-primary" id="downloadCV" download="Praveen_Kumar_D_Resume.pdf" target="_blank" rel="noopener noreferrer">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18">
                                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                             </svg>
@@ -250,6 +251,31 @@
     </section>
 
     <!-- Testimonials section removed -->
+
+    <!-- ===== BLOG SECTION ===== -->
+    <section id="blog" class="blog section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Writing</span>
+                <h2 class="section-title">From The <span class="gradient-text">Blog</span></h2>
+                <p class="section-sub">Notes on what I built, why I built it that way, and what I'd do differently</p>
+            </div>
+            <div class="blog-grid" id="blogGrid">
+                <!-- Posts populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BLOG ARTICLE MODAL ===== -->
+    <div class="blog-modal" id="blogModal">
+        <div class="blog-modal-overlay" id="blogModalOverlay"></div>
+        <div class="blog-modal-content">
+            <button class="blog-modal-close" id="blogModalClose" aria-label="Close article">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+            <div class="blog-modal-body" id="blogModalBody"></div>
+        </div>
+    </div>
 
     <!-- ===== GITHUB ACTIVITY SECTION ===== -->
     <section id="github" class="github section">
@@ -365,6 +391,7 @@
                         <a href="#about">About</a>
                         <a href="#skills">Skills</a>
                         <a href="#projects">Projects</a>
+                        <a href="#blog">Blog</a>
                     </div>
                     <div class="footer-col">
                         <h5>Services</h5>
@@ -393,6 +420,37 @@
             <path d="M18 15l-6-6-6 6"/>
         </svg>
     </button>
+
+    <!-- ===== AI ASSISTANT CHATBOT ===== -->
+    <div class="chatbot" id="chatbot">
+        <div class="chatbot-panel" id="chatbotPanel" role="dialog" aria-label="Chat assistant" aria-hidden="true">
+            <div class="chatbot-header">
+                <div class="chatbot-header-info">
+                    <span class="chatbot-avatar">PK</span>
+                    <div>
+                        <div class="chatbot-title">Ask about Praveen</div>
+                        <div class="chatbot-status"><span class="chatbot-status-dot"></span>Instant answers from this site</div>
+                    </div>
+                </div>
+                <button class="chatbot-close" id="chatbotClose" aria-label="Close chat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-suggestions" id="chatbotSuggestions"></div>
+            <form class="chatbot-input-row" id="chatbotForm">
+                <input type="text" id="chatbotInput" placeholder="Ask about skills, projects, contact…" autocomplete="off" aria-label="Ask a question">
+                <button type="submit" class="chatbot-send" aria-label="Send message">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+                </button>
+            </form>
+        </div>
+        <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open chat assistant" aria-expanded="false">
+            <svg class="chatbot-icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+            <svg class="chatbot-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <span class="chatbot-ping"></span>
+        </button>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script.js"></script>
