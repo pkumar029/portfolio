@@ -22,7 +22,7 @@ const PROFILE = {
     phone: '+91 90259 45924',
     github: 'https://github.com/pkumar029',
     linkedin: 'https://www.linkedin.com/in/praveen-kumar-d-537ab42a3',
-    resume: 'assets/praveen%20Resume_Updated.pdf',
+    resume: 'assets/praveen Resume_Updated.pdf',
 };
 
 const SKILLS = [
